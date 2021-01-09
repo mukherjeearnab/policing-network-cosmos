@@ -5,8 +5,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
-    "github.com/cosmos/cosmos-sdk/codec"
 )
 
 // GetJudgementCount get the total number of judgement
@@ -31,7 +31,7 @@ func (k Keeper) GetJudgementCount(ctx sdk.Context) int64 {
 }
 
 // SetJudgementCount set the total number of judgement
-func (k Keeper) SetJudgementCount(ctx sdk.Context, count int64)  {
+func (k Keeper) SetJudgementCount(ctx sdk.Context, count int64) {
 	store := ctx.KVStore(k.storeKey)
 	byteKey := []byte(types.JudgementCountPrefix)
 	bz := []byte(strconv.FormatInt(count, 10))
@@ -42,15 +42,14 @@ func (k Keeper) SetJudgementCount(ctx sdk.Context, count int64)  {
 func (k Keeper) CreateJudgement(ctx sdk.Context, msg types.MsgCreateJudgement) {
 	// Create the judgement
 	count := k.GetJudgementCount(ctx)
-    var judgement = types.Judgement{
-        Creator: msg.Creator,
-        ID:      strconv.FormatInt(count, 10),
-        ID: msg.ID,
-        ChargeSheetID: msg.ChargeSheetID,
-        CourtID: msg.CourtID,
-        Content: msg.Content,
-        Complete: msg.Complete,
-    }
+	var judgement = types.Judgement{
+		Creator:       msg.Creator,
+		ID:            strconv.FormatInt(count, 10),
+		ChargeSheetID: msg.ChargeSheetID,
+		CourtID:       msg.CourtID,
+		Content:       msg.Content,
+		Complete:      false,
+	}
 
 	store := ctx.KVStore(k.storeKey)
 	key := []byte(types.JudgementPrefix + judgement.ID)
@@ -58,7 +57,7 @@ func (k Keeper) CreateJudgement(ctx sdk.Context, msg types.MsgCreateJudgement) {
 	store.Set(key, value)
 
 	// Update judgement count
-    k.SetJudgementCount(ctx, count+1)
+	k.SetJudgementCount(ctx, count+1)
 }
 
 // GetJudgement returns the judgement information
@@ -129,8 +128,7 @@ func (k Keeper) GetJudgementOwner(ctx sdk.Context, key string) sdk.AccAddress {
 	return judgement.Creator
 }
 
-
-// Check if the key exists in the store
+// JudgementExists check if the key exists in the store
 func (k Keeper) JudgementExists(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.JudgementPrefix + key))
