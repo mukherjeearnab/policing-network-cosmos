@@ -1,8 +1,8 @@
 package types
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+  sdk "github.com/cosmos/cosmos-sdk/types"
+  sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 var _ sdk.Msg = &MsgDeleteChargesheet{}
@@ -14,9 +14,9 @@ type MsgDeleteChargesheet struct {
 
 func NewMsgDeleteChargesheet(id string, creator sdk.AccAddress) MsgDeleteChargesheet {
   return MsgDeleteChargesheet{
-    ID: id,
-		Creator: creator,
-	}
+    ID:      id,
+    Creator: creator,
+  }
 }
 
 func (msg MsgDeleteChargesheet) Route() string {

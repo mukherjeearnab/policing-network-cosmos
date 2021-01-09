@@ -5,8 +5,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
-    "github.com/cosmos/cosmos-sdk/codec"
 )
 
 // GetChargesheetCount get the total number of chargesheet
@@ -31,7 +31,7 @@ func (k Keeper) GetChargesheetCount(ctx sdk.Context) int64 {
 }
 
 // SetChargesheetCount set the total number of chargesheet
-func (k Keeper) SetChargesheetCount(ctx sdk.Context, count int64)  {
+func (k Keeper) SetChargesheetCount(ctx sdk.Context, count int64) {
 	store := ctx.KVStore(k.storeKey)
 	byteKey := []byte(types.ChargesheetCountPrefix)
 	bz := []byte(strconv.FormatInt(count, 10))
@@ -42,16 +42,19 @@ func (k Keeper) SetChargesheetCount(ctx sdk.Context, count int64)  {
 func (k Keeper) CreateChargesheet(ctx sdk.Context, msg types.MsgCreateChargesheet) {
 	// Create the chargesheet
 	count := k.GetChargesheetCount(ctx)
-    var chargesheet = types.Chargesheet{
-        Creator: msg.Creator,
-        ID:      strconv.FormatInt(count, 10),
-        ID: msg.ID,
-        OfficerIDs: msg.OfficerIDs,
-        FirIDs: msg.FirIDs,
-        InvestigationIDs: msg.InvestigationIDs,
-        Content: msg.Content,
-        Complete: msg.Complete,
-    }
+
+	// Create empty slice
+	var emptySlice []string
+
+	var chargesheet = types.Chargesheet{
+		Creator:          msg.Creator,
+		ID:               strconv.FormatInt(count, 10),
+		OfficerIDs:       emptySlice,
+		FirIDs:           emptySlice,
+		InvestigationIDs: emptySlice,
+		Content:          msg.Content,
+		Complete:         false,
+	}
 
 	store := ctx.KVStore(k.storeKey)
 	key := []byte(types.ChargesheetPrefix + chargesheet.ID)
@@ -59,7 +62,7 @@ func (k Keeper) CreateChargesheet(ctx sdk.Context, msg types.MsgCreateChargeshee
 	store.Set(key, value)
 
 	// Update chargesheet count
-    k.SetChargesheetCount(ctx, count+1)
+	k.SetChargesheetCount(ctx, count+1)
 }
 
 // GetChargesheet returns the chargesheet information
@@ -130,8 +133,7 @@ func (k Keeper) GetChargesheetOwner(ctx sdk.Context, key string) sdk.AccAddress 
 	return chargesheet.Creator
 }
 
-
-// Check if the key exists in the store
+// ChargesheetExists check if the key exists in the store
 func (k Keeper) ChargesheetExists(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.ChargesheetPrefix + key))
