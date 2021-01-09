@@ -1,30 +1,30 @@
 package types
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+  sdk "github.com/cosmos/cosmos-sdk/types"
+  sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 var _ sdk.Msg = &MsgCreateProfile{}
 
 type MsgCreateProfile struct {
-  Creator sdk.AccAddress `json:"creator" yaml:"creator"`
-  Type string `json:"Type" yaml:"Type"`
-  ID string `json:"ID" yaml:"ID"`
-  Name string `json:"Name" yaml:"Name"`
-  Role string `json:"Role" yaml:"Role"`
-  FirList string `json:"FirList" yaml:"FirList"`
+  Creator     sdk.AccAddress `json:"creator" yaml:"creator"`
+  ProfileType string         `json:"ProfileType" yaml:"ProfileType"`
+  ID          string         `json:"ID" yaml:"ID"`
+  Name        string         `json:"Name" yaml:"Name"`
+  Role        string         `json:"Role" yaml:"Role"`
+  FirList     string         `json:"FirList" yaml:"FirList"`
 }
 
-func NewMsgCreateProfile(creator sdk.AccAddress, Type string, ID string, Name string, Role string, FirList string) MsgCreateProfile {
+func NewMsgCreateProfile(creator sdk.AccAddress, ProfileType string, ID string, Name string, Role string, FirList string) MsgCreateProfile {
   return MsgCreateProfile{
-		Creator: creator,
-    Type: Type,
-    ID: ID,
-    Name: Name,
-    Role: Role,
-    FirList: FirList,
-	}
+    Creator:     creator,
+    ProfileType: ProfileType,
+    ID:          ID,
+    Name:        Name,
+    Role:        Role,
+    FirList:     FirList,
+  }
 }
 
 func (msg MsgCreateProfile) Route() string {

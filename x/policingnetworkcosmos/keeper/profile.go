@@ -5,8 +5,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
-    "github.com/cosmos/cosmos-sdk/codec"
 )
 
 // GetProfileCount get the total number of profile
@@ -31,7 +31,7 @@ func (k Keeper) GetProfileCount(ctx sdk.Context) int64 {
 }
 
 // SetProfileCount set the total number of profile
-func (k Keeper) SetProfileCount(ctx sdk.Context, count int64)  {
+func (k Keeper) SetProfileCount(ctx sdk.Context, count int64) {
 	store := ctx.KVStore(k.storeKey)
 	byteKey := []byte(types.ProfileCountPrefix)
 	bz := []byte(strconv.FormatInt(count, 10))
@@ -42,15 +42,18 @@ func (k Keeper) SetProfileCount(ctx sdk.Context, count int64)  {
 func (k Keeper) CreateProfile(ctx sdk.Context, msg types.MsgCreateProfile) {
 	// Create the profile
 	count := k.GetProfileCount(ctx)
-    var profile = types.Profile{
-        Creator: msg.Creator,
-        ID:      strconv.FormatInt(count, 10),
-        Type: msg.Type,
-        ID: msg.ID,
-        Name: msg.Name,
-        Role: msg.Role,
-        FirList: msg.FirList,
-    }
+
+	// Define Empty Slice
+	var emptySlice []string
+
+	var profile = types.Profile{
+		Creator: msg.Creator,
+		Type:    msg.Type,
+		ID:      msg.ID,
+		Name:    msg.Name,
+		Role:    msg.Role,
+		FirList: empty_slice,
+	}
 
 	store := ctx.KVStore(k.storeKey)
 	key := []byte(types.ProfilePrefix + profile.ID)
@@ -58,7 +61,7 @@ func (k Keeper) CreateProfile(ctx sdk.Context, msg types.MsgCreateProfile) {
 	store.Set(key, value)
 
 	// Update profile count
-    k.SetProfileCount(ctx, count+1)
+	k.SetProfileCount(ctx, count+1)
 }
 
 // GetProfile returns the profile information
@@ -129,8 +132,7 @@ func (k Keeper) GetProfileOwner(ctx sdk.Context, key string) sdk.AccAddress {
 	return profile.Creator
 }
 
-
-// Check if the key exists in the store
+// ProfileExists check if the key exists in the store
 func (k Keeper) ProfileExists(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.ProfilePrefix + key))

@@ -4,19 +4,18 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/keeper"
+	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
 func handleMsgSetProfile(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetProfile) (*sdk.Result, error) {
 	var profile = types.Profile{
 		Creator: msg.Creator,
 		ID:      msg.ID,
-    	Type: msg.Type,
-    	ID: msg.ID,
-    	Name: msg.Name,
-    	Role: msg.Role,
-    	FirList: msg.FirList,
+		Type:    msg.Type,
+		Name:    msg.Name,
+		Role:    msg.Role,
+		FirList: msg.FirList,
 	}
 	if !msg.Creator.Equals(k.GetProfileOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner") // If not, throw an error
