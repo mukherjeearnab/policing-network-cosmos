@@ -4,8 +4,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/keeper"
+	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
 // Handle a message to delete name

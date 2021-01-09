@@ -5,8 +5,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
-    "github.com/cosmos/cosmos-sdk/codec"
 )
 
 // GetFirCount get the total number of fir
@@ -31,7 +31,7 @@ func (k Keeper) GetFirCount(ctx sdk.Context) int64 {
 }
 
 // SetFirCount set the total number of fir
-func (k Keeper) SetFirCount(ctx sdk.Context, count int64)  {
+func (k Keeper) SetFirCount(ctx sdk.Context, count int64) {
 	store := ctx.KVStore(k.storeKey)
 	byteKey := []byte(types.FirCountPrefix)
 	bz := []byte(strconv.FormatInt(count, 10))
@@ -42,14 +42,12 @@ func (k Keeper) SetFirCount(ctx sdk.Context, count int64)  {
 func (k Keeper) CreateFir(ctx sdk.Context, msg types.MsgCreateFir) {
 	// Create the fir
 	count := k.GetFirCount(ctx)
-    var fir = types.Fir{
-        Creator: msg.Creator,
-        ID:      strconv.FormatInt(count, 10),
-        ID: msg.ID,
-        CitizenID: msg.CitizenID,
-        Content: msg.Content,
-        InvestigationID: msg.InvestigationID,
-    }
+	var fir = types.Fir{
+		Creator:         msg.Creator,
+		ID:              strconv.FormatInt(count, 10),
+		Content:         msg.Content,
+		InvestigationID: msg.InvestigationID,
+	}
 
 	store := ctx.KVStore(k.storeKey)
 	key := []byte(types.FirPrefix + fir.ID)
@@ -57,7 +55,7 @@ func (k Keeper) CreateFir(ctx sdk.Context, msg types.MsgCreateFir) {
 	store.Set(key, value)
 
 	// Update fir count
-    k.SetFirCount(ctx, count+1)
+	k.SetFirCount(ctx, count+1)
 }
 
 // GetFir returns the fir information
@@ -128,8 +126,7 @@ func (k Keeper) GetFirOwner(ctx sdk.Context, key string) sdk.AccAddress {
 	return fir.Creator
 }
 
-
-// Check if the key exists in the store
+// FirExists check if the key exists in the store
 func (k Keeper) FirExists(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.FirPrefix + key))

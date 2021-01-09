@@ -1,28 +1,26 @@
 package types
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+  sdk "github.com/cosmos/cosmos-sdk/types"
+  sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 var _ sdk.Msg = &MsgCreateFir{}
 
 type MsgCreateFir struct {
-  Creator sdk.AccAddress `json:"creator" yaml:"creator"`
-  ID string `json:"ID" yaml:"ID"`
-  CitizenID string `json:"CitizenID" yaml:"CitizenID"`
-  Content string `json:"Content" yaml:"Content"`
-  InvestigationID string `json:"InvestigationID" yaml:"InvestigationID"`
+  Creator         sdk.AccAddress `json:"creator" yaml:"creator"`
+  CitizenID       string         `json:"CitizenID" yaml:"CitizenID"`
+  Content         string         `json:"Content" yaml:"Content"`
+  InvestigationID string         `json:"InvestigationID" yaml:"InvestigationID"`
 }
 
-func NewMsgCreateFir(creator sdk.AccAddress, ID string, CitizenID string, Content string, InvestigationID string) MsgCreateFir {
+func NewMsgCreateFir(creator sdk.AccAddress, CitizenID string, Content string) MsgCreateFir {
   return MsgCreateFir{
-		Creator: creator,
-    ID: ID,
-    CitizenID: CitizenID,
-    Content: Content,
-    InvestigationID: InvestigationID,
-	}
+    Creator:         creator,
+    CitizenID:       CitizenID,
+    Content:         Content,
+    InvestigationID: "NOT SET",
+  }
 }
 
 func (msg MsgCreateFir) Route() string {

@@ -3,8 +3,8 @@ package policingnetworkcosmos
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/keeper"
+	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
 func handleMsgCreateFir(ctx sdk.Context, k keeper.Keeper, msg types.MsgCreateFir) (*sdk.Result, error) {
