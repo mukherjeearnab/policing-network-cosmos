@@ -1,0 +1,41 @@
+types:
+    profile:
+        Type: string <-- ["citizen", "police", "forensics", "court", "identityprovider"]
+        ID: string
+        Name: string
+        Role: string
+        FirList: []string
+
+    fir:
+        ID: string
+        CitizenID: string
+        Content: string
+        InvestigationID: string
+
+    investigation:
+        ID: string
+        FirID: string
+        OfficerID: string
+        Content: string
+        Evidence: []string
+        Complete: boolean, default false
+
+    evidence: 
+        ID: string
+        FileExt: string
+        InvestigationID: string
+
+    chargesheet:
+        ID: string
+        OfficerIDs: []string
+        FirIDs: []string
+        InvestigationIDs: []string
+        Content: string
+        Complete: boolean, default false
+
+    judgement:
+        ID: string
+        ChargeSheetID: string
+        CourtID: string
+        Content: string
+        Complete: boolean, default false

@@ -23,6 +23,24 @@ func GetTxCmd(cdc *codec.Codec) *cobra.Command {
 
 	policingnetworkcosmosTxCmd.AddCommand(flags.PostCommands(
     // this line is used by starport scaffolding # 1
+		GetCmdCreateJudgement(cdc),
+		GetCmdSetJudgement(cdc),
+		GetCmdDeleteJudgement(cdc),
+		GetCmdCreateChargesheet(cdc),
+		GetCmdSetChargesheet(cdc),
+		GetCmdDeleteChargesheet(cdc),
+		GetCmdCreateEvidence(cdc),
+		GetCmdSetEvidence(cdc),
+		GetCmdDeleteEvidence(cdc),
+		GetCmdCreateInvestigation(cdc),
+		GetCmdSetInvestigation(cdc),
+		GetCmdDeleteInvestigation(cdc),
+		GetCmdCreateFir(cdc),
+		GetCmdSetFir(cdc),
+		GetCmdDeleteFir(cdc),
+		GetCmdCreateProfile(cdc),
+		GetCmdSetProfile(cdc),
+		GetCmdDeleteProfile(cdc),
 	)...)
 
 	return policingnetworkcosmosTxCmd

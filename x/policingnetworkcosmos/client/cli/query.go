@@ -30,6 +30,18 @@ func GetQueryCmd(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	policingnetworkcosmosQueryCmd.AddCommand(
 		flags.GetCommands(
       // this line is used by starport scaffolding # 1
+			GetCmdListJudgement(queryRoute, cdc),
+			GetCmdGetJudgement(queryRoute, cdc),
+			GetCmdListChargesheet(queryRoute, cdc),
+			GetCmdGetChargesheet(queryRoute, cdc),
+			GetCmdListEvidence(queryRoute, cdc),
+			GetCmdGetEvidence(queryRoute, cdc),
+			GetCmdListInvestigation(queryRoute, cdc),
+			GetCmdGetInvestigation(queryRoute, cdc),
+			GetCmdListFir(queryRoute, cdc),
+			GetCmdGetFir(queryRoute, cdc),
+			GetCmdListProfile(queryRoute, cdc),
+			GetCmdGetProfile(queryRoute, cdc),
 		)...,
 	)
 
