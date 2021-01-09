@@ -5,8 +5,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
-    "github.com/cosmos/cosmos-sdk/codec"
 )
 
 // GetInvestigationCount get the total number of investigation
@@ -31,7 +31,7 @@ func (k Keeper) GetInvestigationCount(ctx sdk.Context) int64 {
 }
 
 // SetInvestigationCount set the total number of investigation
-func (k Keeper) SetInvestigationCount(ctx sdk.Context, count int64)  {
+func (k Keeper) SetInvestigationCount(ctx sdk.Context, count int64) {
 	store := ctx.KVStore(k.storeKey)
 	byteKey := []byte(types.InvestigationCountPrefix)
 	bz := []byte(strconv.FormatInt(count, 10))
@@ -42,16 +42,19 @@ func (k Keeper) SetInvestigationCount(ctx sdk.Context, count int64)  {
 func (k Keeper) CreateInvestigation(ctx sdk.Context, msg types.MsgCreateInvestigation) {
 	// Create the investigation
 	count := k.GetInvestigationCount(ctx)
-    var investigation = types.Investigation{
-        Creator: msg.Creator,
-        ID:      strconv.FormatInt(count, 10),
-        ID: msg.ID,
-        FirID: msg.FirID,
-        OfficerID: msg.OfficerID,
-        Content: msg.Content,
-        Evidence: msg.Evidence,
-        Complete: msg.Complete,
-    }
+
+	// Create empty slice
+	var emptySlice []string
+
+	var investigation = types.Investigation{
+		Creator:   msg.Creator,
+		ID:        strconv.FormatInt(count, 10),
+		FirID:     msg.FirID,
+		OfficerID: msg.OfficerID,
+		Content:   msg.Content,
+		Evidence:  emptySlice,
+		Complete:  false,
+	}
 
 	store := ctx.KVStore(k.storeKey)
 	key := []byte(types.InvestigationPrefix + investigation.ID)
@@ -59,7 +62,7 @@ func (k Keeper) CreateInvestigation(ctx sdk.Context, msg types.MsgCreateInvestig
 	store.Set(key, value)
 
 	// Update investigation count
-    k.SetInvestigationCount(ctx, count+1)
+	k.SetInvestigationCount(ctx, count+1)
 }
 
 // GetInvestigation returns the investigation information
@@ -130,8 +133,7 @@ func (k Keeper) GetInvestigationOwner(ctx sdk.Context, key string) sdk.AccAddres
 	return investigation.Creator
 }
 
-
-// Check if the key exists in the store
+// InvestigationExists check if the key exists in the store
 func (k Keeper) InvestigationExists(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.InvestigationPrefix + key))

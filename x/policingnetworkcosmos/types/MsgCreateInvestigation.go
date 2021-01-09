@@ -1,32 +1,26 @@
 package types
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+  sdk "github.com/cosmos/cosmos-sdk/types"
+  sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 var _ sdk.Msg = &MsgCreateInvestigation{}
 
 type MsgCreateInvestigation struct {
-  Creator sdk.AccAddress `json:"creator" yaml:"creator"`
-  ID string `json:"ID" yaml:"ID"`
-  FirID string `json:"FirID" yaml:"FirID"`
-  OfficerID string `json:"OfficerID" yaml:"OfficerID"`
-  Content string `json:"Content" yaml:"Content"`
-  Evidence string `json:"Evidence" yaml:"Evidence"`
-  Complete string `json:"Complete" yaml:"Complete"`
+  Creator   sdk.AccAddress `json:"creator" yaml:"creator"`
+  FirID     string         `json:"FirID" yaml:"FirID"`
+  OfficerID string         `json:"OfficerID" yaml:"OfficerID"`
+  Content   string         `json:"Content" yaml:"Content"`
 }
 
-func NewMsgCreateInvestigation(creator sdk.AccAddress, ID string, FirID string, OfficerID string, Content string, Evidence string, Complete string) MsgCreateInvestigation {
+func NewMsgCreateInvestigation(creator sdk.AccAddress, FirID string, OfficerID string, Content string) MsgCreateInvestigation {
   return MsgCreateInvestigation{
-		Creator: creator,
-    ID: ID,
-    FirID: FirID,
+    Creator:   creator,
+    FirID:     FirID,
     OfficerID: OfficerID,
-    Content: Content,
-    Evidence: Evidence,
-    Complete: Complete,
-	}
+    Content:   Content,
+  }
 }
 
 func (msg MsgCreateInvestigation) Route() string {
