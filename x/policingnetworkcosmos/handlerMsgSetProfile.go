@@ -10,12 +10,12 @@ import (
 
 func handleMsgSetProfile(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetProfile) (*sdk.Result, error) {
 	var profile = types.Profile{
-		Creator: msg.Creator,
-		ID:      msg.ID,
-		Type:    msg.Type,
-		Name:    msg.Name,
-		Role:    msg.Role,
-		FirList: msg.FirList,
+		Creator:     msg.Creator,
+		ID:          msg.ID,
+		ProfileType: msg.ProfileType,
+		Name:        msg.Name,
+		Role:        msg.Role,
+		FirList:     msg.FirList,
 	}
 	if !msg.Creator.Equals(k.GetProfileOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner") // If not, throw an error

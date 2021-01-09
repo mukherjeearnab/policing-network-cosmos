@@ -47,12 +47,12 @@ func (k Keeper) CreateProfile(ctx sdk.Context, msg types.MsgCreateProfile) {
 	var emptySlice []string
 
 	var profile = types.Profile{
-		Creator: msg.Creator,
-		Type:    msg.Type,
-		ID:      msg.ID,
-		Name:    msg.Name,
-		Role:    msg.Role,
-		FirList: empty_slice,
+		Creator:     msg.Creator,
+		ProfileType: msg.ProfileType,
+		ID:          msg.ID,
+		Name:        msg.Name,
+		Role:        msg.Role,
+		FirList:     emptySlice,
 	}
 
 	store := ctx.KVStore(k.storeKey)
