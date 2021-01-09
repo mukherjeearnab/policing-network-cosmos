@@ -1,26 +1,24 @@
 package types
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+  sdk "github.com/cosmos/cosmos-sdk/types"
+  sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 var _ sdk.Msg = &MsgCreateEvidence{}
 
 type MsgCreateEvidence struct {
-  Creator sdk.AccAddress `json:"creator" yaml:"creator"`
-  ID string `json:"ID" yaml:"ID"`
-  FileExt string `json:"FileExt" yaml:"FileExt"`
-  InvestigationID string `json:"InvestigationID" yaml:"InvestigationID"`
+  Creator         sdk.AccAddress `json:"creator" yaml:"creator"`
+  FileExt         string         `json:"FileExt" yaml:"FileExt"`
+  InvestigationID string         `json:"InvestigationID" yaml:"InvestigationID"`
 }
 
-func NewMsgCreateEvidence(creator sdk.AccAddress, ID string, FileExt string, InvestigationID string) MsgCreateEvidence {
+func NewMsgCreateEvidence(creator sdk.AccAddress, FileExt string, InvestigationID string) MsgCreateEvidence {
   return MsgCreateEvidence{
-		Creator: creator,
-    ID: ID,
-    FileExt: FileExt,
+    Creator:         creator,
+    FileExt:         FileExt,
     InvestigationID: InvestigationID,
-	}
+  }
 }
 
 func (msg MsgCreateEvidence) Route() string {

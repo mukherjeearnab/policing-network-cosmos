@@ -3,8 +3,8 @@ package policingnetworkcosmos
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/keeper"
+	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
 func handleMsgCreateEvidence(ctx sdk.Context, k keeper.Keeper, msg types.MsgCreateEvidence) (*sdk.Result, error) {

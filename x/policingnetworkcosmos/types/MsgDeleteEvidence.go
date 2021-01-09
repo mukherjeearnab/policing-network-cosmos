@@ -1,8 +1,8 @@
 package types
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+  sdk "github.com/cosmos/cosmos-sdk/types"
+  sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 var _ sdk.Msg = &MsgDeleteEvidence{}
@@ -14,9 +14,9 @@ type MsgDeleteEvidence struct {
 
 func NewMsgDeleteEvidence(id string, creator sdk.AccAddress) MsgDeleteEvidence {
   return MsgDeleteEvidence{
-    ID: id,
-		Creator: creator,
-	}
+    ID:      id,
+    Creator: creator,
+  }
 }
 
 func (msg MsgDeleteEvidence) Route() string {

@@ -5,8 +5,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
-    "github.com/cosmos/cosmos-sdk/codec"
 )
 
 // GetEvidenceCount get the total number of evidence
@@ -31,7 +31,7 @@ func (k Keeper) GetEvidenceCount(ctx sdk.Context) int64 {
 }
 
 // SetEvidenceCount set the total number of evidence
-func (k Keeper) SetEvidenceCount(ctx sdk.Context, count int64)  {
+func (k Keeper) SetEvidenceCount(ctx sdk.Context, count int64) {
 	store := ctx.KVStore(k.storeKey)
 	byteKey := []byte(types.EvidenceCountPrefix)
 	bz := []byte(strconv.FormatInt(count, 10))
@@ -42,13 +42,12 @@ func (k Keeper) SetEvidenceCount(ctx sdk.Context, count int64)  {
 func (k Keeper) CreateEvidence(ctx sdk.Context, msg types.MsgCreateEvidence) {
 	// Create the evidence
 	count := k.GetEvidenceCount(ctx)
-    var evidence = types.Evidence{
-        Creator: msg.Creator,
-        ID:      strconv.FormatInt(count, 10),
-        ID: msg.ID,
-        FileExt: msg.FileExt,
-        InvestigationID: msg.InvestigationID,
-    }
+	var evidence = types.Evidence{
+		Creator:         msg.Creator,
+		ID:              strconv.FormatInt(count, 10),
+		FileExt:         msg.FileExt,
+		InvestigationID: msg.InvestigationID,
+	}
 
 	store := ctx.KVStore(k.storeKey)
 	key := []byte(types.EvidencePrefix + evidence.ID)
@@ -56,7 +55,7 @@ func (k Keeper) CreateEvidence(ctx sdk.Context, msg types.MsgCreateEvidence) {
 	store.Set(key, value)
 
 	// Update evidence count
-    k.SetEvidenceCount(ctx, count+1)
+	k.SetEvidenceCount(ctx, count+1)
 }
 
 // GetEvidence returns the evidence information
@@ -127,8 +126,7 @@ func (k Keeper) GetEvidenceOwner(ctx sdk.Context, key string) sdk.AccAddress {
 	return evidence.Creator
 }
 
-
-// Check if the key exists in the store
+// EvidenceExists check if the key exists in the store
 func (k Keeper) EvidenceExists(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.EvidencePrefix + key))
