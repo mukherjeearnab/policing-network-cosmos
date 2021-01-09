@@ -5,9 +5,8 @@ import (
 )
 
 type Evidence struct {
-	Creator sdk.AccAddress `json:"creator" yaml:"creator"`
-	ID      string         `json:"id" yaml:"id"`
-    ID string `json:"ID" yaml:"ID"`
-    FileExt string `json:"FileExt" yaml:"FileExt"`
-    InvestigationID string `json:"InvestigationID" yaml:"InvestigationID"`
+	Creator         sdk.AccAddress `json:"creator" yaml:"creator"`
+	ID              string         `json:"id" yaml:"id"`
+	FileExt         string         `json:"FileExt" yaml:"FileExt"`
+	InvestigationID string         `json:"InvestigationID" yaml:"InvestigationID"`
 }
