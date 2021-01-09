@@ -1,6 +1,6 @@
 types:
     profile:
-        Type: string <-- ["citizen", "police", "forensics", "court", "identityprovider"]
+        ProfileType: string <-- ["citizen", "police", "forensics", "court", "identityprovider"]
         ID: string
         Name: string
         Role: string
