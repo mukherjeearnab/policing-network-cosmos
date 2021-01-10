@@ -1,9 +1,27 @@
 version: 1
 accounts:
-  - name: user1
-    coins: ["1000token", "100000000stake"]
-  - name: user2
-    coins: ["500token"]
+    - name: admin
+      coins: ["100000token", "100000000stake"]
+    - name: idp1
+      coins: ["500token"]
+    - name: ci1
+      coins: ["500token"]
+    - name: po1
+      coins: ["500token"]
+    - name: fo1
+      coins: ["500token"]
+    - name: co1
+      coins: ["500token"]
+    - name: idp2
+      coins: ["500token"]
+    - name: ci2
+      coins: ["500token"]
+    - name: po2
+      coins: ["500token"]
+    - name: fo2
+      coins: ["500token"]
+    - name: co2
+      coins: ["500token"]
 validator:
-  name: user1
-  staked: "100000000stake"
+    name: admin
+    staked: "100000000stake"
