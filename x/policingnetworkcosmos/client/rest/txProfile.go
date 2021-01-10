@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
@@ -15,14 +15,13 @@ import (
 var _ = strconv.Itoa(42)
 
 type createProfileRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	Type string `json:"Type"`
-	ID string `json:"ID"`
-	Name string `json:"Name"`
-	Role string `json:"Role"`
-	FirList string `json:"FirList"`
-	
+	BaseReq     rest.BaseReq `json:"base_req"`
+	Creator     string       `json:"creator"`
+	ProfileType string       `json:"ProfileType"`
+	ID          string       `json:"ID"`
+	Address     string       `json:"Address"`
+	Name        string       `json:"Name"`
+	Role        string       `json:"Role"`
 }
 
 func createProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -42,26 +41,23 @@ func createProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
-		parsedType := req.Type
-		
+		parsedType := req.ProfileType
+
 		parsedID := req.ID
-		
+
 		parsedName := req.Name
-		
+
 		parsedRole := req.Role
-		
-		parsedFirList := req.FirList
-		
+
+		parsedAddress := req.Address
 
 		msg := types.NewMsgCreateProfile(
 			creator,
 			parsedType,
 			parsedID,
+			parsedAddress,
 			parsedName,
 			parsedRole,
-			parsedFirList,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -75,15 +71,13 @@ func createProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
 }
 
 type setProfileRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	ID 		string `json:"id"`
-	Creator string `json:"creator"`
-	Type string `json:"Type"`
-	ID string `json:"ID"`
-	Name string `json:"Name"`
-	Role string `json:"Role"`
-	FirList string `json:"FirList"`
-	
+	BaseReq     rest.BaseReq `json:"base_req"`
+	Creator     string       `json:"creator"`
+	ProfileType string       `json:"ProfileType"`
+	ID          string       `json:"ID"`
+	Address     string       `json:"Address"`
+	Name        string       `json:"Name"`
+	Role        string       `json:"Role"`
 }
 
 func setProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -103,27 +97,23 @@ func setProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
-		parsedType := req.Type
-		
+		parsedType := req.ProfileType
+
 		parsedID := req.ID
-		
+
 		parsedName := req.Name
-		
+
 		parsedRole := req.Role
-		
-		parsedFirList := req.FirList
-		
+
+		parsedAddress := req.Address
 
 		msg := types.NewMsgSetProfile(
 			creator,
+			parsedAddress,
 			req.ID,
 			parsedType,
-			parsedID,
 			parsedName,
 			parsedRole,
-			parsedFirList,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -138,8 +128,8 @@ func setProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deleteProfileRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID 		string `json:"id"`
+	Creator string       `json:"creator"`
+	Address string       `json:"Address"`
 }
 
 func deleteProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -158,7 +148,10 @@ func deleteProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
-		msg := types.NewMsgDeleteProfile(req.ID, creator)
+
+		address := req.Address
+
+		msg := types.NewMsgDeleteProfile(address, creator)
 
 		err = msg.ValidateBasic()
 		if err != nil {
