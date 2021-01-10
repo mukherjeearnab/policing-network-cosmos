@@ -2,7 +2,7 @@ package cli
 
 import (
 	"bufio"
-    
+
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
@@ -15,20 +15,20 @@ import (
 
 func GetCmdCreateProfile(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-profile [Type] [ID] [Name] [Role] [FirList]",
+		Use:   "create-profile [Type] [ID] [Address] [Name] [Role]",
 		Short: "Creates a new profile",
 		Args:  cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			argsType := string(args[0] )
-			argsID := string(args[1] )
-			argsName := string(args[2] )
-			argsRole := string(args[3] )
-			argsFirList := string(args[4] )
-			
+			argsType := string(args[0])
+			argsID := string(args[1])
+			argsAddress := string(args[2])
+			argsName := string(args[3])
+			argsRole := string(args[4])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreateProfile(cliCtx.GetFromAddress(), string(argsType), string(argsID), string(argsName), string(argsRole), string(argsFirList))
+			msg := types.NewMsgCreateProfile(cliCtx.GetFromAddress(), string(argsType), string(argsID), string(argsAddress), string(argsName), string(argsRole))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
@@ -38,24 +38,22 @@ func GetCmdCreateProfile(cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-
 func GetCmdSetProfile(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "set-profile [id]  [Type] [ID] [Name] [Role] [FirList]",
+		Use:   "set-profile [Type] [ID] [Address] [Name] [Role]",
 		Short: "Set a new profile",
 		Args:  cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			id := args[0]
-			argsType := string(args[1])
-			argsID := string(args[2])
+			argsType := string(args[0])
+			argsID := string(args[1])
+			argsAddress := string(args[2])
 			argsName := string(args[3])
 			argsRole := string(args[4])
-			argsFirList := string(args[5])
-			
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgSetProfile(cliCtx.GetFromAddress(), id, string(argsType), string(argsID), string(argsName), string(argsRole), string(argsFirList))
+			msg := types.NewMsgSetProfile(cliCtx.GetFromAddress(), string(argsAddress), string(argsID), string(argsType), string(argsName), string(argsRole))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
@@ -67,8 +65,8 @@ func GetCmdSetProfile(cdc *codec.Codec) *cobra.Command {
 
 func GetCmdDeleteProfile(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "delete-profile [id]",
-		Short: "Delete a new profile by ID",
+		Use:   "delete-profile [address]",
+		Short: "Delete a new profile by Address",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
