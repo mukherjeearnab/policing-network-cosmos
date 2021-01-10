@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
@@ -15,13 +15,10 @@ import (
 var _ = strconv.Itoa(42)
 
 type createFirRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID string `json:"ID"`
-	CitizenID string `json:"CitizenID"`
-	Content string `json:"Content"`
-	InvestigationID string `json:"InvestigationID"`
-	
+	BaseReq   rest.BaseReq `json:"base_req"`
+	Creator   string       `json:"creator"`
+	CitizenID string       `json:"CitizenID"`
+	Content   string       `json:"Content"`
 }
 
 func createFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -41,23 +38,16 @@ func createFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
-		parsedID := req.ID
-		
 		parsedCitizenID := req.CitizenID
-		
+
 		parsedContent := req.Content
-		
+
 		parsedInvestigationID := req.InvestigationID
-		
 
 		msg := types.NewMsgCreateFir(
 			creator,
-			parsedID,
 			parsedCitizenID,
 			parsedContent,
-			parsedInvestigationID,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -71,14 +61,12 @@ func createFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
 }
 
 type setFirRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	ID 		string `json:"id"`
-	Creator string `json:"creator"`
-	ID string `json:"ID"`
-	CitizenID string `json:"CitizenID"`
-	Content string `json:"Content"`
-	InvestigationID string `json:"InvestigationID"`
-	
+	BaseReq         rest.BaseReq `json:"base_req"`
+	ID              string       `json:"id"`
+	Creator         string       `json:"creator"`
+	CitizenID       string       `json:"CitizenID"`
+	Content         string       `json:"Content"`
+	InvestigationID string       `json:"InvestigationID"`
 }
 
 func setFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -98,24 +86,20 @@ func setFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
 		parsedID := req.ID
-		
+
 		parsedCitizenID := req.CitizenID
-		
+
 		parsedContent := req.Content
-		
+
 		parsedInvestigationID := req.InvestigationID
-		
 
 		msg := types.NewMsgSetFir(
-			creator,
-			req.ID,
 			parsedID,
+			creator,
 			parsedCitizenID,
 			parsedContent,
 			parsedInvestigationID,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -130,8 +114,8 @@ func setFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deleteFirRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID 		string `json:"id"`
+	Creator string       `json:"creator"`
+	ID      string       `json:"id"`
 }
 
 func deleteFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
