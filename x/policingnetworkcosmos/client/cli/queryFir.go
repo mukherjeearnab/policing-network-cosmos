@@ -5,8 +5,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 	"github.com/spf13/cobra"
-    "github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
 func GetCmdListFir(queryRoute string, cdc *codec.Codec) *cobra.Command {

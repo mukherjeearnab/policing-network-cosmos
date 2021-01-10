@@ -2,7 +2,7 @@ package cli
 
 import (
 	"bufio"
-    
+
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
@@ -15,19 +15,17 @@ import (
 
 func GetCmdCreateFir(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-fir [ID] [CitizenID] [Content] [InvestigationID]",
+		Use:   "create-fir [CitizenID] [Content]",
 		Short: "Creates a new fir",
 		Args:  cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			argsID := string(args[0] )
-			argsCitizenID := string(args[1] )
-			argsContent := string(args[2] )
-			argsInvestigationID := string(args[3] )
-			
+			argsCitizenID := string(args[0])
+			argsContent := string(args[1])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreateFir(cliCtx.GetFromAddress(), string(argsID), string(argsCitizenID), string(argsContent), string(argsInvestigationID))
+			msg := types.NewMsgCreateFir(cliCtx.GetFromAddress(), string(argsCitizenID), string(argsContent))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
@@ -37,23 +35,21 @@ func GetCmdCreateFir(cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-
 func GetCmdSetFir(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "set-fir [id]  [ID] [CitizenID] [Content] [InvestigationID]",
+		Use:   "set-fir [id] [CitizenID] [Content] [InvestigationID]",
 		Short: "Set a new fir",
 		Args:  cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id := args[0]
-			argsID := string(args[1])
-			argsCitizenID := string(args[2])
-			argsContent := string(args[3])
-			argsInvestigationID := string(args[4])
-			
+			argsCitizenID := string(args[1])
+			argsContent := string(args[2])
+			argsInvestigationID := string(args[3])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgSetFir(cliCtx.GetFromAddress(), id, string(argsID), string(argsCitizenID), string(argsContent), string(argsInvestigationID))
+			msg := types.NewMsgSetFir(cliCtx.GetFromAddress(), id, string(argsCitizenID), string(argsContent), string(argsInvestigationID))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
