@@ -110,7 +110,7 @@ func setProfileHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		msg := types.NewMsgSetProfile(
 			creator,
 			parsedAddress,
-			req.ID,
+			parsedID,
 			parsedType,
 			parsedName,
 			parsedRole,
