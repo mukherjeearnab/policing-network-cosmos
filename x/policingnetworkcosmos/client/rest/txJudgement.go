@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
@@ -15,14 +15,11 @@ import (
 var _ = strconv.Itoa(42)
 
 type createJudgementRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID string `json:"ID"`
-	ChargeSheetID string `json:"ChargeSheetID"`
-	CourtID string `json:"CourtID"`
-	Content string `json:"Content"`
-	Complete string `json:"Complete"`
-	
+	BaseReq       rest.BaseReq `json:"base_req"`
+	Creator       string       `json:"creator"`
+	ChargeSheetID string       `json:"ChargeSheetID"`
+	CourtID       string       `json:"CourtID"`
+	Content       string       `json:"Content"`
 }
 
 func createJudgementHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -42,26 +39,17 @@ func createJudgementHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
-		parsedID := req.ID
-		
 		parsedChargeSheetID := req.ChargeSheetID
-		
+
 		parsedCourtID := req.CourtID
-		
+
 		parsedContent := req.Content
-		
-		parsedComplete := req.Complete
-		
 
 		msg := types.NewMsgCreateJudgement(
 			creator,
-			parsedID,
 			parsedChargeSheetID,
 			parsedCourtID,
 			parsedContent,
-			parsedComplete,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -75,15 +63,13 @@ func createJudgementHandler(cliCtx context.CLIContext) http.HandlerFunc {
 }
 
 type setJudgementRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	ID 		string `json:"id"`
-	Creator string `json:"creator"`
-	ID string `json:"ID"`
-	ChargeSheetID string `json:"ChargeSheetID"`
-	CourtID string `json:"CourtID"`
-	Content string `json:"Content"`
-	Complete string `json:"Complete"`
-	
+	BaseReq       rest.BaseReq `json:"base_req"`
+	ID            string       `json:"id"`
+	Creator       string       `json:"creator"`
+	ChargeSheetID string       `json:"ChargeSheetID"`
+	CourtID       string       `json:"CourtID"`
+	Content       string       `json:"Content"`
+	Complete      string       `json:"Complete"`
 }
 
 func setJudgementHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -103,27 +89,23 @@ func setJudgementHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
 		parsedID := req.ID
-		
+
 		parsedChargeSheetID := req.ChargeSheetID
-		
+
 		parsedCourtID := req.CourtID
-		
+
 		parsedContent := req.Content
-		
+
 		parsedComplete := req.Complete
-		
 
 		msg := types.NewMsgSetJudgement(
 			creator,
-			req.ID,
 			parsedID,
 			parsedChargeSheetID,
 			parsedCourtID,
 			parsedContent,
 			parsedComplete,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -138,8 +120,8 @@ func setJudgementHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deleteJudgementRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID 		string `json:"id"`
+	Creator string       `json:"creator"`
+	ID      string       `json:"id"`
 }
 
 func deleteJudgementHandler(cliCtx context.CLIContext) http.HandlerFunc {
