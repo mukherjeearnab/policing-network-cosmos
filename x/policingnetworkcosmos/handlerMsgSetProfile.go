@@ -11,6 +11,8 @@ import (
 func handleMsgSetProfile(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetProfile) (*sdk.Result, error) {
 	address, _ := sdk.AccAddressFromBech32(string(msg.Address))
 
+	var emptySlice []string
+
 	var profile = types.Profile{
 		Creator:     msg.Creator,
 		ID:          msg.ID,
@@ -18,7 +20,7 @@ func handleMsgSetProfile(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetProfi
 		Address:     address,
 		Name:        msg.Name,
 		Role:        msg.Role,
-		FirList:     msg.FirList,
+		FirList:     emptySlice,
 	}
 	if !msg.Creator.Equals(k.GetProfileOwner(ctx, msg.Address)) { // Checks if the the msg sender is the same as the current owner
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner") // If not, throw an error

@@ -14,7 +14,6 @@ type MsgSetProfile struct {
   Address     string         `json:"Address" yaml:"Address"`
   Name        string         `json:"Name" yaml:"Name"`
   Role        string         `json:"Role" yaml:"Role"`
-  FirList     string         `json:"FirList" yaml:"FirList"`
 }
 
 func NewMsgSetProfile(creator sdk.AccAddress, Address string, id string, ProfileType string, Name string, Role string, FirList string) MsgSetProfile {
@@ -25,7 +24,6 @@ func NewMsgSetProfile(creator sdk.AccAddress, Address string, id string, Profile
     Address:     Address,
     Name:        Name,
     Role:        Role,
-    FirList:     FirList,
   }
 }
 

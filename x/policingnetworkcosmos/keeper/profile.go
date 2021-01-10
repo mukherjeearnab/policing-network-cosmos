@@ -84,6 +84,11 @@ func (k Keeper) GetProfile(ctx sdk.Context, key string) (types.Profile, error) {
 func (k Keeper) SetProfile(ctx sdk.Context, profile types.Profile) {
 	profileKey := profile.Address.String()
 	store := ctx.KVStore(k.storeKey)
+
+	// GET Original profile and replace FirList
+	originalProfile, _ := k.GetProfile(ctx, profileKey)
+	profile.FirList = originalProfile.FirList
+
 	bz := k.cdc.MustMarshalBinaryLengthPrefixed(profile)
 	key := []byte(types.ProfilePrefix + profileKey)
 	store.Set(key, bz)
