@@ -10,11 +10,11 @@ import (
 
 // Handle a message to delete name
 func handleMsgDeleteProfile(ctx sdk.Context, k keeper.Keeper, msg types.MsgDeleteProfile) (*sdk.Result, error) {
-	if !k.ProfileExists(ctx, msg.ID) {
+	if !k.ProfileExists(ctx, msg.Address) {
 		// replace with ErrKeyNotFound for 0.39+
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, msg.ID)
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, msg.Address)
 	}
-	if !msg.Creator.Equals(k.GetProfileOwner(ctx, msg.ID)) {
+	if !msg.Creator.Equals(k.GetProfileOwner(ctx, msg.Address)) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner")
 	}
 

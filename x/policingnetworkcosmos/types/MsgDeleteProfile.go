@@ -8,13 +8,13 @@ import (
 var _ sdk.Msg = &MsgDeleteProfile{}
 
 type MsgDeleteProfile struct {
-  ID      string         `json:"id" yaml:"id"`
+  Address string         `json:"Address" yaml:"Address"`
   Creator sdk.AccAddress `json:"creator" yaml:"creator"`
 }
 
-func NewMsgDeleteProfile(id string, creator sdk.AccAddress) MsgDeleteProfile {
+func NewMsgDeleteProfile(Address string, creator sdk.AccAddress) MsgDeleteProfile {
   return MsgDeleteProfile{
-    ID:      id,
+    Address: Address,
     Creator: creator,
   }
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func handleMsgCreateProfile(ctx sdk.Context, k keeper.Keeper, msg types.MsgCreateProfile) (*sdk.Result, error) {
-	if !k.ProfileExists(ctx, msg.ID) {
+	if !k.ProfileExists(ctx, msg.Address) {
 		k.CreateProfile(ctx, msg)
 	}
 

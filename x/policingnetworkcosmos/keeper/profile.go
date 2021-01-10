@@ -46,17 +46,21 @@ func (k Keeper) CreateProfile(ctx sdk.Context, msg types.MsgCreateProfile) {
 	// Define Empty Slice
 	var emptySlice []string
 
+	// Create AccAddress var
+	address, _ := sdk.AccAddressFromBech32(string(msg.Address))
+
 	var profile = types.Profile{
 		Creator:     msg.Creator,
 		ProfileType: msg.ProfileType,
 		ID:          msg.ID,
+		Address:     address,
 		Name:        msg.Name,
 		Role:        msg.Role,
 		FirList:     emptySlice,
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	key := []byte(types.ProfilePrefix + profile.ID)
+	key := []byte(types.ProfilePrefix + profile.Address.String())
 	value := k.cdc.MustMarshalBinaryLengthPrefixed(profile)
 	store.Set(key, value)
 
@@ -78,7 +82,7 @@ func (k Keeper) GetProfile(ctx sdk.Context, key string) (types.Profile, error) {
 
 // SetProfile sets a profile
 func (k Keeper) SetProfile(ctx sdk.Context, profile types.Profile) {
-	profileKey := profile.ID
+	profileKey := profile.Address.String()
 	store := ctx.KVStore(k.storeKey)
 	bz := k.cdc.MustMarshalBinaryLengthPrefixed(profile)
 	key := []byte(types.ProfilePrefix + profileKey)

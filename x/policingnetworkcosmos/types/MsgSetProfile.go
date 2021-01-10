@@ -11,16 +11,18 @@ type MsgSetProfile struct {
   ID          string         `json:"id" yaml:"id"`
   Creator     sdk.AccAddress `json:"creator" yaml:"creator"`
   ProfileType string         `json:"ProfileType" yaml:"ProfileType"`
+  Address     string         `json:"Address" yaml:"Address"`
   Name        string         `json:"Name" yaml:"Name"`
   Role        string         `json:"Role" yaml:"Role"`
   FirList     string         `json:"FirList" yaml:"FirList"`
 }
 
-func NewMsgSetProfile(creator sdk.AccAddress, id string, ProfileType string, Name string, Role string, FirList string) MsgSetProfile {
+func NewMsgSetProfile(creator sdk.AccAddress, Address string, id string, ProfileType string, Name string, Role string, FirList string) MsgSetProfile {
   return MsgSetProfile{
     ID:          id,
     Creator:     creator,
     ProfileType: ProfileType,
+    Address:     Address,
     Name:        Name,
     Role:        Role,
     FirList:     FirList,
@@ -47,6 +49,12 @@ func (msg MsgSetProfile) GetSignBytes() []byte {
 func (msg MsgSetProfile) ValidateBasic() error {
   if msg.Creator.Empty() {
     return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "creator can't be empty")
+  }
+
+  _, err := sdk.AccAddressFromBech32(msg.Address)
+
+  if err != nil {
+    return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "Invalid Proile Address")
   }
   return nil
 }
