@@ -2,7 +2,7 @@ package cli
 
 import (
 	"bufio"
-    
+
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
@@ -15,18 +15,17 @@ import (
 
 func GetCmdCreateEvidence(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-evidence [ID] [FileExt] [InvestigationID]",
+		Use:   "create-evidence [FileExt] [InvestigationID]",
 		Short: "Creates a new evidence",
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			argsID := string(args[0] )
-			argsFileExt := string(args[1] )
-			argsInvestigationID := string(args[2] )
-			
+			argsFileExt := string(args[0])
+			argsInvestigationID := string(args[1])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreateEvidence(cliCtx.GetFromAddress(), string(argsID), string(argsFileExt), string(argsInvestigationID))
+			msg := types.NewMsgCreateEvidence(cliCtx.GetFromAddress(), string(argsFileExt), string(argsInvestigationID))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
@@ -36,22 +35,20 @@ func GetCmdCreateEvidence(cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-
 func GetCmdSetEvidence(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "set-evidence [id]  [ID] [FileExt] [InvestigationID]",
+		Use:   "set-evidence [id] [FileExt] [InvestigationID]",
 		Short: "Set a new evidence",
 		Args:  cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id := args[0]
-			argsID := string(args[1])
-			argsFileExt := string(args[2])
-			argsInvestigationID := string(args[3])
-			
+			argsFileExt := string(args[1])
+			argsInvestigationID := string(args[2])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgSetEvidence(cliCtx.GetFromAddress(), id, string(argsID), string(argsFileExt), string(argsInvestigationID))
+			msg := types.NewMsgSetEvidence(cliCtx.GetFromAddress(), id, string(argsFileExt), string(argsInvestigationID))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
