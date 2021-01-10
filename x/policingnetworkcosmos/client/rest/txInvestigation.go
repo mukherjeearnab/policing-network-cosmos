@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
@@ -15,15 +15,11 @@ import (
 var _ = strconv.Itoa(42)
 
 type createInvestigationRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID string `json:"ID"`
-	FirID string `json:"FirID"`
-	OfficerID string `json:"OfficerID"`
-	Content string `json:"Content"`
-	Evidence string `json:"Evidence"`
-	Complete string `json:"Complete"`
-	
+	BaseReq   rest.BaseReq `json:"base_req"`
+	Creator   string       `json:"creator"`
+	FirID     string       `json:"FirID"`
+	OfficerID string       `json:"OfficerID"`
+	Content   string       `json:"Content"`
 }
 
 func createInvestigationHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -43,29 +39,17 @@ func createInvestigationHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
-		parsedID := req.ID
-		
 		parsedFirID := req.FirID
-		
+
 		parsedOfficerID := req.OfficerID
-		
+
 		parsedContent := req.Content
-		
-		parsedEvidence := req.Evidence
-		
-		parsedComplete := req.Complete
-		
 
 		msg := types.NewMsgCreateInvestigation(
 			creator,
-			parsedID,
 			parsedFirID,
 			parsedOfficerID,
 			parsedContent,
-			parsedEvidence,
-			parsedComplete,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -79,16 +63,13 @@ func createInvestigationHandler(cliCtx context.CLIContext) http.HandlerFunc {
 }
 
 type setInvestigationRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	ID 		string `json:"id"`
-	Creator string `json:"creator"`
-	ID string `json:"ID"`
-	FirID string `json:"FirID"`
-	OfficerID string `json:"OfficerID"`
-	Content string `json:"Content"`
-	Evidence string `json:"Evidence"`
-	Complete string `json:"Complete"`
-	
+	BaseReq   rest.BaseReq `json:"base_req"`
+	ID        string       `json:"id"`
+	Creator   string       `json:"creator"`
+	FirID     string       `json:"FirID"`
+	OfficerID string       `json:"OfficerID"`
+	Content   string       `json:"Content"`
+	Complete  string       `json:"Complete"`
 }
 
 func setInvestigationHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -108,30 +89,23 @@ func setInvestigationHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
 		parsedID := req.ID
-		
+
 		parsedFirID := req.FirID
-		
+
 		parsedOfficerID := req.OfficerID
-		
+
 		parsedContent := req.Content
-		
-		parsedEvidence := req.Evidence
-		
+
 		parsedComplete := req.Complete
-		
 
 		msg := types.NewMsgSetInvestigation(
 			creator,
-			req.ID,
 			parsedID,
 			parsedFirID,
 			parsedOfficerID,
 			parsedContent,
-			parsedEvidence,
 			parsedComplete,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -146,8 +120,8 @@ func setInvestigationHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deleteInvestigationRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID 		string `json:"id"`
+	Creator string       `json:"creator"`
+	ID      string       `json:"id"`
 }
 
 func deleteInvestigationHandler(cliCtx context.CLIContext) http.HandlerFunc {
