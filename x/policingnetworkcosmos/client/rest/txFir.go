@@ -42,8 +42,6 @@ func createFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 		parsedContent := req.Content
 
-		parsedInvestigationID := req.InvestigationID
-
 		msg := types.NewMsgCreateFir(
 			creator,
 			parsedCitizenID,
@@ -95,8 +93,8 @@ func setFirHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		parsedInvestigationID := req.InvestigationID
 
 		msg := types.NewMsgSetFir(
-			parsedID,
 			creator,
+			parsedID,
 			parsedCitizenID,
 			parsedContent,
 			parsedInvestigationID,

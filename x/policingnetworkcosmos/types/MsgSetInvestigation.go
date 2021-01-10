@@ -16,7 +16,7 @@ type MsgSetInvestigation struct {
   Complete  string         `json:"Complete" yaml:"Complete"`
 }
 
-func NewMsgSetInvestigation(creator sdk.AccAddress, id string, ID string, FirID string, OfficerID string, Content string, Complete string) MsgSetInvestigation {
+func NewMsgSetInvestigation(creator sdk.AccAddress, id string, FirID string, OfficerID string, Content string, Complete string) MsgSetInvestigation {
   return MsgSetInvestigation{
     ID:        id,
     Creator:   creator,
