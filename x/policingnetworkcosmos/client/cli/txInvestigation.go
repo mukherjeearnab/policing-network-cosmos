@@ -2,7 +2,7 @@ package cli
 
 import (
 	"bufio"
-    
+
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
@@ -15,21 +15,18 @@ import (
 
 func GetCmdCreateInvestigation(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-investigation [ID] [FirID] [OfficerID] [Content] [Evidence] [Complete]",
+		Use:   "create-investigation [FirID] [OfficerID] [Content]",
 		Short: "Creates a new investigation",
 		Args:  cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			argsID := string(args[0] )
-			argsFirID := string(args[1] )
-			argsOfficerID := string(args[2] )
-			argsContent := string(args[3] )
-			argsEvidence := string(args[4] )
-			argsComplete := string(args[5] )
-			
+			argsFirID := string(args[0])
+			argsOfficerID := string(args[1])
+			argsContent := string(args[2])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreateInvestigation(cliCtx.GetFromAddress(), string(argsID), string(argsFirID), string(argsOfficerID), string(argsContent), string(argsEvidence), string(argsComplete))
+			msg := types.NewMsgCreateInvestigation(cliCtx.GetFromAddress(), string(argsFirID), string(argsOfficerID), string(argsContent))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
@@ -39,25 +36,22 @@ func GetCmdCreateInvestigation(cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-
 func GetCmdSetInvestigation(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "set-investigation [id]  [ID] [FirID] [OfficerID] [Content] [Evidence] [Complete]",
+		Use:   "set-investigation [id] [FirID] [OfficerID] [Content] [Complete]",
 		Short: "Set a new investigation",
 		Args:  cobra.ExactArgs(7),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id := args[0]
-			argsID := string(args[1])
-			argsFirID := string(args[2])
-			argsOfficerID := string(args[3])
-			argsContent := string(args[4])
-			argsEvidence := string(args[5])
-			argsComplete := string(args[6])
-			
+			argsFirID := string(args[1])
+			argsOfficerID := string(args[2])
+			argsContent := string(args[3])
+			argsComplete := string(args[4])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgSetInvestigation(cliCtx.GetFromAddress(), id, string(argsID), string(argsFirID), string(argsOfficerID), string(argsContent), string(argsEvidence), string(argsComplete))
+			msg := types.NewMsgSetInvestigation(cliCtx.GetFromAddress(), id, string(argsFirID), string(argsOfficerID), string(argsContent), string(argsComplete))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
