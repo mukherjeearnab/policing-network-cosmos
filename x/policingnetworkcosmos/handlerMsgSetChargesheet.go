@@ -10,13 +10,10 @@ import (
 
 func handleMsgSetChargesheet(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetChargesheet) (*sdk.Result, error) {
 	var chargesheet = types.Chargesheet{
-		Creator:          msg.Creator,
-		ID:               msg.ID,
-		OfficerIDs:       msg.OfficerIDs,
-		FirIDs:           msg.FirIDs,
-		InvestigationIDs: msg.InvestigationIDs,
-		Content:          msg.Content,
-		Complete:         msg.Complete,
+		Creator:  msg.Creator,
+		ID:       msg.ID,
+		Content:  msg.Content,
+		Complete: msg.Complete,
 	}
 	if !msg.Creator.Equals(k.GetChargesheetOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner") // If not, throw an error

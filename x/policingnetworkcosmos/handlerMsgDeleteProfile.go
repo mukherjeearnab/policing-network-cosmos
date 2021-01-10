@@ -18,6 +18,6 @@ func handleMsgDeleteProfile(ctx sdk.Context, k keeper.Keeper, msg types.MsgDelet
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner")
 	}
 
-	k.DeleteProfile(ctx, msg.ID)
+	k.DeleteProfile(ctx, msg.Address)
 	return &sdk.Result{}, nil
 }
