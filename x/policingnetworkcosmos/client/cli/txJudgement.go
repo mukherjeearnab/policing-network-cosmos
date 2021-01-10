@@ -2,7 +2,7 @@ package cli
 
 import (
 	"bufio"
-    
+
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
@@ -15,20 +15,18 @@ import (
 
 func GetCmdCreateJudgement(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-judgement [ID] [ChargeSheetID] [CourtID] [Content] [Complete]",
+		Use:   "create-judgement [ChargeSheetID] [CourtID] [Content]",
 		Short: "Creates a new judgement",
 		Args:  cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			argsID := string(args[0] )
-			argsChargeSheetID := string(args[1] )
-			argsCourtID := string(args[2] )
-			argsContent := string(args[3] )
-			argsComplete := string(args[4] )
-			
+			argsChargeSheetID := string(args[0])
+			argsCourtID := string(args[1])
+			argsContent := string(args[2])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreateJudgement(cliCtx.GetFromAddress(), string(argsID), string(argsChargeSheetID), string(argsCourtID), string(argsContent), string(argsComplete))
+			msg := types.NewMsgCreateJudgement(cliCtx.GetFromAddress(), string(argsChargeSheetID), string(argsCourtID), string(argsContent))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
@@ -38,24 +36,22 @@ func GetCmdCreateJudgement(cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-
 func GetCmdSetJudgement(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "set-judgement [id]  [ID] [ChargeSheetID] [CourtID] [Content] [Complete]",
+		Use:   "set-judgement [id] [ChargeSheetID] [CourtID] [Content] [Complete]",
 		Short: "Set a new judgement",
 		Args:  cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id := args[0]
-			argsID := string(args[1])
-			argsChargeSheetID := string(args[2])
-			argsCourtID := string(args[3])
-			argsContent := string(args[4])
-			argsComplete := string(args[5])
-			
+			argsChargeSheetID := string(args[1])
+			argsCourtID := string(args[2])
+			argsContent := string(args[3])
+			argsComplete := string(args[4])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgSetJudgement(cliCtx.GetFromAddress(), id, string(argsID), string(argsChargeSheetID), string(argsCourtID), string(argsContent), string(argsComplete))
+			msg := types.NewMsgSetJudgement(cliCtx.GetFromAddress(), id, string(argsChargeSheetID), string(argsCourtID), string(argsContent), string(argsComplete))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
