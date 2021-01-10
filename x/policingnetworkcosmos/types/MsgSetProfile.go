@@ -16,7 +16,7 @@ type MsgSetProfile struct {
   Role        string         `json:"Role" yaml:"Role"`
 }
 
-func NewMsgSetProfile(creator sdk.AccAddress, Address string, id string, ProfileType string, Name string, Role string, FirList string) MsgSetProfile {
+func NewMsgSetProfile(creator sdk.AccAddress, Address string, id string, ProfileType string, Name string, Role string) MsgSetProfile {
   return MsgSetProfile{
     ID:          id,
     Creator:     creator,

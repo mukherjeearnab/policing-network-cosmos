@@ -15,7 +15,7 @@ func handleMsgSetJudgement(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetJud
 		ChargeSheetID: msg.ChargeSheetID,
 		CourtID:       msg.CourtID,
 		Content:       msg.Content,
-		Complete:      msg.Complete,
+		Complete:      true,
 	}
 	if !msg.Creator.Equals(k.GetJudgementOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner") // If not, throw an error
