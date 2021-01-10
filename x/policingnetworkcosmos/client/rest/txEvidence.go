@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/mukherjeearnab/policing-network-cosmos/x/policingnetworkcosmos/types"
 )
 
@@ -15,12 +15,10 @@ import (
 var _ = strconv.Itoa(42)
 
 type createEvidenceRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID string `json:"ID"`
-	FileExt string `json:"FileExt"`
-	InvestigationID string `json:"InvestigationID"`
-	
+	BaseReq         rest.BaseReq `json:"base_req"`
+	Creator         string       `json:"creator"`
+	FileExt         string       `json:"FileExt"`
+	InvestigationID string       `json:"InvestigationID"`
 }
 
 func createEvidenceHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -40,20 +38,14 @@ func createEvidenceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
-		parsedID := req.ID
-		
 		parsedFileExt := req.FileExt
-		
+
 		parsedInvestigationID := req.InvestigationID
-		
 
 		msg := types.NewMsgCreateEvidence(
 			creator,
-			parsedID,
 			parsedFileExt,
 			parsedInvestigationID,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -67,13 +59,11 @@ func createEvidenceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 }
 
 type setEvidenceRequest struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	ID 		string `json:"id"`
-	Creator string `json:"creator"`
-	ID string `json:"ID"`
-	FileExt string `json:"FileExt"`
-	InvestigationID string `json:"InvestigationID"`
-	
+	BaseReq         rest.BaseReq `json:"base_req"`
+	ID              string       `json:"id"`
+	Creator         string       `json:"creator"`
+	FileExt         string       `json:"FileExt"`
+	InvestigationID string       `json:"InvestigationID"`
 }
 
 func setEvidenceHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -93,21 +83,17 @@ func setEvidenceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			return
 		}
 
-		
 		parsedID := req.ID
-		
+
 		parsedFileExt := req.FileExt
-		
+
 		parsedInvestigationID := req.InvestigationID
-		
 
 		msg := types.NewMsgSetEvidence(
 			creator,
-			req.ID,
 			parsedID,
 			parsedFileExt,
 			parsedInvestigationID,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -122,8 +108,8 @@ func setEvidenceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deleteEvidenceRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
-	ID 		string `json:"id"`
+	Creator string       `json:"creator"`
+	ID      string       `json:"id"`
 }
 
 func deleteEvidenceHandler(cliCtx context.CLIContext) http.HandlerFunc {
