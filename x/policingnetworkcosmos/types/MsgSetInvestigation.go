@@ -13,18 +13,16 @@ type MsgSetInvestigation struct {
   FirID     string         `json:"FirID" yaml:"FirID"`
   OfficerID string         `json:"OfficerID" yaml:"OfficerID"`
   Content   string         `json:"Content" yaml:"Content"`
-  Evidence  string         `json:"Evidence" yaml:"Evidence"`
   Complete  string         `json:"Complete" yaml:"Complete"`
 }
 
-func NewMsgSetInvestigation(creator sdk.AccAddress, id string, ID string, FirID string, OfficerID string, Content string, Evidence string, Complete string) MsgSetInvestigation {
+func NewMsgSetInvestigation(creator sdk.AccAddress, id string, ID string, FirID string, OfficerID string, Content string, Complete string) MsgSetInvestigation {
   return MsgSetInvestigation{
     ID:        id,
     Creator:   creator,
     FirID:     FirID,
     OfficerID: OfficerID,
     Content:   Content,
-    Evidence:  Evidence,
     Complete:  Complete,
   }
 }

@@ -9,12 +9,15 @@ import (
 )
 
 func handleMsgSetInvestigation(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetInvestigation) (*sdk.Result, error) {
+	var emptySlice []string
+
 	var investigation = types.Investigation{
 		Creator:   msg.Creator,
 		ID:        msg.ID,
 		FirID:     msg.FirID,
 		OfficerID: msg.OfficerID,
 		Content:   msg.Content,
+		Evidence:  emptySlice,
 		Complete:  true,
 	}
 	if !msg.Creator.Equals(k.GetInvestigationOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner

@@ -80,6 +80,11 @@ func (k Keeper) GetInvestigation(ctx sdk.Context, key string) (types.Investigati
 // SetInvestigation sets a investigation
 func (k Keeper) SetInvestigation(ctx sdk.Context, investigation types.Investigation) {
 	investigationKey := investigation.ID
+
+	// GET Original investigation and replace Evidence
+	originalInvestigation, _ := k.GetInvestigation(ctx, investigationKey)
+	investigation.Evidence = originalInvestigation.Evidence
+
 	store := ctx.KVStore(k.storeKey)
 	bz := k.cdc.MustMarshalBinaryLengthPrefixed(investigation)
 	key := []byte(types.InvestigationPrefix + investigationKey)
