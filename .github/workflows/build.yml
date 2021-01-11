@@ -28,10 +28,10 @@ jobs:
 
       - name: Compile
         run: |
-          cd cmd/policingnetworkcosmosd
+          cd cmd/policing-network-cosmosd
           go build .
           cd ..
-          cd policingnetworkcosmoscli
+          cd policing-network-cosmoscli
           go build .
 
       - uses: actions/upload-artifact@v2
@@ -63,10 +63,10 @@ jobs:
 
       - name: Compile
         run: |
-          cd cmd/policingnetworkcosmosd
+          cd cmd/policing-network-cosmosd
           go build .
           cd ..
-          cd policingnetworkcosmoscli
+          cd policing-network-cosmoscli
           go build .
 
       - uses: actions/upload-artifact@v2
