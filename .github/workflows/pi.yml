@@ -27,10 +27,10 @@ jobs:
 
       - name: Compile policingnetworkcosmos
         run: |
-            cd cmd/policingnetworkcosmosd
+            cd cmd/policing-network-cosmosd
             go build .
             cd ..
-            cd policingnetworkcosmoscli
+            cd policing-network-cosmoscli
             go build .
         env:
           GOOS: linux
