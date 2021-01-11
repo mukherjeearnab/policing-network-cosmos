@@ -40,13 +40,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: policingnetworkcosmoscli arm64
-          path: cmd/policingnetworkcosmoscli/policingnetworkcosmoscli
+          path: cmd/policing-network-cosmoscli
 
       - name: Upload policingnetworkcosmos Arm64 daemon
         uses: actions/upload-artifact@v2
         with:
           name: policingnetworkcosmosd arm64
-          path: cmd/policingnetworkcosmosd/policingnetworkcosmosd
+          path: cmd/policing-network-cosmosd
 
       - name: Build policingnetworkcosmos.img
         run: docker run --rm --privileged -v /dev:/dev -v ${PWD}:/build mkaczanowski/packer-builder-arm build .pi/pibuild.json
